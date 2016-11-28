@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+</head>
+
+<script
+        src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function WebSocketTest()
+    {
+        if ("WebSocket" in window)
+        {
+            alert("WebSocket is supported by your Browser!");
+            // Let us open a web socket
+            var ws = new WebSocket("ws://localhost:8080/clock");
+            ws.onopen = function()
+            {
+                // Web Socket is connected, send data using send()
+                ws.send("Message to send");
+                alert("Message is sent...");
+            };
+            ws.onmessage = function (evt)
+            {
+                var msg = evt.data;
+                $("#clock").text(msg);
+            };
+            ws.onclose = function()
+            {
+                // websocket is closed.
+                alert("Connection is closed...");
+            };
+        }
+        else
+        {
+            // The browser doesn't support WebSocket
+            alert("WebSocket NOT supported by your Browser!");
+        }
+    }
+</script>
+
+<body>
+
+<div id="sse">
+    <a href="javascript:WebSocketTest()">Run Clock from WebSocket</a>
+    <br>
+    <div id="clock" />
+</div>
+
+</body>
+</html>
